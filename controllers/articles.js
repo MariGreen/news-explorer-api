@@ -21,8 +21,8 @@ const createArticle = (req, res, next) => {
   Article.create({
     keyword, title, text, date, source, link, image, owner,
   })
-    .catch((err) => {
-      throw new BadRequestError({ message: `${err.message}` });
+    .catch(() => {
+      throw new BadRequestError('Переданы некорректные данные');
     })
     .then((article) => {
       Article.findById(article._id)
@@ -46,6 +46,10 @@ const deleteArticle = (req, res, next) => {
       if (article.owner._id.toString() === req.user._id.toString()) {
         Article.findOneAndDelete({ _id: article._id })
           .then(() => {
+            // const { owner, ...restArticle } = article;
+            // delete article.owner;
+            // // article.toObject();
+            // res.status(200).send(restArticle); // тут точно нет поля owner
             res.status(200).send({ data: article });
           });
       } else {

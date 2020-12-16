@@ -48,26 +48,26 @@ const validateArticle = celebrate({
   body: Joi.object().keys({
     keyword: Joi.string().required().trim()
       .messages({
-        'any.required': 'Поле "email" должно быть заполнено',
+        'any.required': 'Поле "keyword" должно быть заполнено',
       }),
     title: Joi.string().required().trim()
       .messages({
-        'any.required': 'Поле "email" должно быть заполнено',
+        'any.required': 'Поле "title" должно быть заполнено',
       })
       .message({
-        'string.trim': 'Поле "email" должно быть заполнено',
+        'string.trim': 'Поле "title" должно быть заполнено',
       }),
     text: Joi.string().required().trim()
       .messages({
-        'any.required': 'Поле "email" должно быть заполнено',
+        'any.required': 'Поле "text" должно быть заполнено',
       }),
     date: Joi.string().required()
       .messages({
-        'any.required': 'Поле "email" должно быть заполнено',
+        'any.required': 'Поле "date" должно быть заполнено',
       }),
     source: Joi.string().required()
       .messages({
-        'any.required': 'Поле "email" должно быть заполнено',
+        'any.required': 'Поле "source" должно быть заполнено',
       }),
     link: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
@@ -106,33 +106,10 @@ const validateCardId = celebrate({
   }),
 });
 
-const validateUserUpdate = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    about: Joi.string().min(8).max(30).required(),
-  }),
-});
-
-const validateUserAvatar = celebrate({
-  body: Joi.object().keys({
-    avatar: Joi.string().regex(/^(https?:\/\/)?(w{3}\.)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?\#?$/).required(),
-  }),
-});
-
-const validateCard = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    link: Joi.string().regex(/^(https?:\/\/)?(w{3}\.)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?\#?$/).required(),
-  }),
-});
-
 module.exports = {
   validateUser,
   validateLogin,
   validateId,
-  validateUserUpdate,
-  validateUserAvatar,
-  validateCard,
   validateCardId,
   validateArticle,
 };
