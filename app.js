@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const { errors } = require('celebrate');
+const errorHandler = require('./middlewares/errorHandler');
 const router = require('./routes/index');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -35,20 +36,21 @@ app.use('/', router);
 
 app.use(errorLogger);
 app.use(errors());
+app.use(errorHandler);
 
-app.use((err, req, res, next) => {
-  // если у ошибки нет статуса, выставляем 500
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({
-      // проверяем статус и выставляем сообщение в зависимости от него
-      message: statusCode === 500
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
-  next();
-});
+// app.use((err, req, res, next) => {
+//   // если у ошибки нет статуса, выставляем 500
+//   const { statusCode = 500, message } = err;
+//   res
+//     .status(statusCode)
+//     .send({
+//       // проверяем статус и выставляем сообщение в зависимости от него
+//       message: statusCode === 500
+//         ? 'На сервере произошла ошибка'
+//         : message,
+//     });
+//   next();
+// });
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
