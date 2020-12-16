@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 const { celebrate, Joi } = require('celebrate');
+const { default: validator } = require('validator');
 
 const validateUser = celebrate({
   body: Joi.object().keys({
@@ -43,9 +44,59 @@ const validateLogin = celebrate({
   }),
 });
 
+const validateArticle = celebrate({
+  body: Joi.object().keys({
+    keyword: Joi.string().required().trim()
+      .messages({
+        'any.required': 'Поле "email" должно быть заполнено',
+      }),
+    title: Joi.string().required().trim()
+      .messages({
+        'any.required': 'Поле "email" должно быть заполнено',
+      })
+      .message({
+        'string.trim': 'Поле "email" должно быть заполнено',
+      }),
+    text: Joi.string().required().trim()
+      .messages({
+        'any.required': 'Поле "email" должно быть заполнено',
+      }),
+    date: Joi.string().required()
+      .messages({
+        'any.required': 'Поле "email" должно быть заполнено',
+      }),
+    source: Joi.string().required()
+      .messages({
+        'any.required': 'Поле "email" должно быть заполнено',
+      }),
+    link: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле "link" должно быть валидным url-адресом');
+    })
+      .messages({
+        'any.required': 'Поле "link" должно быть заполнено',
+      }),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле "link" должно быть валидным url-адресом');
+    })
+      .messages({
+        'any.required': 'Поле "link" должно быть заполнено',
+      }),
+  }),
+});
+
 const validateId = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().hex().length(24),
+    _id: Joi.string().hex().length(24)
+      .messages({
+        'string.length': 'Длина поля "_id": 24 символа',
+        'string.hex': 'Поле "password" может содержать только hex-символы',
+      }),
   }),
 });
 
@@ -83,4 +134,5 @@ module.exports = {
   validateUserAvatar,
   validateCard,
   validateCardId,
+  validateArticle,
 };

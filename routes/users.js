@@ -1,12 +1,7 @@
-const router = require('express').Router();
+const user = require('express').Router();
 
-const {
-  getUserByToken,
+const { getUserByToken } = require('../controllers/users');
 
-} = require('../controllers/users');
+user.get('/users/me', getUserByToken);
 
-router.get('/users/me', getUserByToken);
-
-module.exports = {
-  router,
-};
+module.exports = user;

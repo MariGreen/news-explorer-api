@@ -36,8 +36,8 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Поле "image" должно быть заполнено'],
     validate: {
-      validator(link) {
-        return validator.isURL(link);
+      validator(image) {
+        return validator.isURL(image);
       },
       message: 'Поле "image" должно быть валидным url-адресом',
     },
@@ -45,7 +45,7 @@ const articleSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: [true, 'Поле "owner" не может быть пустым'],
+    required: true,
     select: false,
     default: {},
   },
