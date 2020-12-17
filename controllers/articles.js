@@ -2,6 +2,7 @@ const Article = require('../models/article');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const { BAD_REQUEST, NOT_FOUND_ARTICLE, FORBIDDEN } = require('../errors/constants');
 
 const getArticles = (req, res, next) => {
   const owner = req.user._id;
@@ -22,14 +23,24 @@ const createArticle = (req, res, next) => {
     keyword, title, text, date, source, link, image, owner,
   })
     .catch(() => {
-      throw new BadRequestError('Переданы некорректные данные');
+      throw new BadRequestError({ BAD_REQUEST });
     })
     .then((article) => {
       Article.findById(article._id)
         .populate('owner')
-        .orFail(() => new NotFoundError('Не удалось сохранить статью'))
-        .then((item) => {
-          res.status(201).send(item);
+        .orFail(() => new NotFoundError({ NOT_FOUND_ARTICLE }))
+        .then(() => {
+          res.status(201).send({
+            data: {
+              keyword: article.keyword,
+              title: article.title,
+              text: article.text,
+              date: article.date,
+              source: article.source,
+              link: article.link,
+              image: article.image,
+            },
+          });
         });
     }).catch(next);
 };
@@ -39,21 +50,27 @@ const deleteArticle = (req, res, next) => {
     .orFail(new Error('NoArticle'))
     .catch((err) => {
       if (err.message === 'NoArticle') {
-        throw new NotFoundError('Статьи нет в базе');
+        throw new NotFoundError({ NOT_FOUND_ARTICLE });
       }
     })
     .then((article) => {
       if (article.owner._id.toString() === req.user._id.toString()) {
         Article.findOneAndDelete({ _id: article._id })
           .then(() => {
-            // const { owner, ...restArticle } = article;
-            // delete article.owner;
-            // // article.toObject();
-            // res.status(200).send(restArticle); // тут точно нет поля owner
-            res.status(200).send({ data: article });
+            res.status(200).send({
+              data: {
+                keyword: article.keyword,
+                title: article.title,
+                text: article.text,
+                date: article.date,
+                source: article.source,
+                link: article.link,
+                image: article.image,
+              },
+            });
           });
       } else {
-        throw new ForbiddenError('Можно удалить только свой контент');
+        throw new ForbiddenError({ FORBIDDEN });
       }
     })
     .catch(next);

@@ -1,6 +1,7 @@
 const BAD_REQUEST = 'Переданы некорректные данные';
 const NOT_FOUND_ARTICLE = 'Статьи нет в базе';
 const NOT_FOUND_USER = 'Такого пользователя не существует';
+const NOT_FOUND = 'Запрашиваемый ресурс не найден';
 const FORBIDDEN = 'Можно удалить только свой контент';
 const UNAUTHORIZED = 'Необходима авторизация';
 const ERROR_CREATE = 'Не удалось создать пользователя';
@@ -13,6 +14,7 @@ module.exports = {
   BAD_REQUEST,
   NOT_FOUND_ARTICLE,
   NOT_FOUND_USER,
+  NOT_FOUND,
   FORBIDDEN,
   UNAUTHORIZED,
   ERROR_CREATE,

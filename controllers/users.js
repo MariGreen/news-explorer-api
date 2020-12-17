@@ -4,6 +4,9 @@ const User = require('../models/user');
 const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const {
+  UNAUTHORIZED, NOT_FOUND_USER, ERROR_CREATE, CONFILICT,
+} = require('../errors/constants');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const SALT_ROUNDS = 10;
@@ -15,12 +18,12 @@ const getUserByToken = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET');
   } catch (err) {
-    throw new UnauthorizedError('Необходима авторизация');
+    throw new UnauthorizedError({ UNAUTHORIZED });
   }
   req.user = payload;
 
   User.findById(req.user)
-    .orFail(() => new NotFoundError('Такой пользователь не найден'))
+    .orFail(() => new NotFoundError({ NOT_FOUND_USER }))
     .then((user) => res.send({ data: { email: user.email, name: user.name } }))
     .catch(next);
 };
@@ -30,12 +33,12 @@ const createUser = (req, res, next) => {
 
   return bcrypt.hash(password, SALT_ROUNDS, (error, hash) => {
     if (error) {
-      return new Error('Не удалось создать пользователя');
+      return new Error({ ERROR_CREATE });
     }
     return User.findOne({ email })
       .then((usr) => {
         if (usr) {
-          return next(new ConflictError('Пользователь с таким email уже есть'));
+          return next(new ConflictError({ CONFILICT }));
         }
         return User.create(({ email, password: hash, name }))
           .then((user) => res.status(201).send({ message: `Пользователь ${user.name} успешно создан.` }));
@@ -49,7 +52,7 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Такой пользователь не найден');
+        throw new NotFoundError({ NOT_FOUND_USER });
       }
 
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET', { expiresIn: '7d' });
