@@ -20,7 +20,7 @@ const getUserByToken = (req, res, next) => {
   req.user = payload;
 
   User.findById(req.user)
-    .orFail(() => new NotFoundError('Такого пользователя не существует'))
+    .orFail(() => new NotFoundError('Такой пользователь не найден'))
     .then((user) => res.send({ data: { email: user.email, name: user.name } }))
     .catch(next);
 };
