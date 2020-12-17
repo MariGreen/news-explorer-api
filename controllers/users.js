@@ -7,8 +7,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const {
   UNAUTHORIZED, NOT_FOUND_USER, ERROR_CREATE, CONFILICT,
 } = require('../errors/constants');
+const { JWT_SECRET } = require('../envconfig');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
 const SALT_ROUNDS = 10;
 
 const getUserByToken = (req, res, next) => {
@@ -16,7 +16,7 @@ const getUserByToken = (req, res, next) => {
 
   let payload;
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET');
+    payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
     throw new UnauthorizedError({ UNAUTHORIZED });
   }
@@ -55,7 +55,7 @@ const login = (req, res, next) => {
         throw new NotFoundError({ NOT_FOUND_USER });
       }
 
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
 
       return res.status(200).send({ token });
     })

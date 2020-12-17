@@ -18,7 +18,7 @@ const limiter = require('./middlewares/limiter');
 app.use(helmet());
 app.use(requestLogger);
 
-const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mydiplomadb' } = process.env;
+const { PORT, MONGO_URL } = require('./envconfig');
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
