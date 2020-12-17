@@ -1,7 +1,7 @@
 {
-  "name": "y",
+  "name": "news-explorer",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend for news-explorer API",
   "main": "index.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -26,7 +26,7 @@
     "eslint-plugin-import": "^2.22.1"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "SET NODE_ENV=production && node app.js",
     "dev": "nodemon app.js",
     "lint": "eslint . --fix"
   },
@@ -35,7 +35,7 @@
     "url": "git+https://github.com/MariGreen/news-explorer-api.git"
   },
   "author": "MGreen",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/MariGreen/news-explorer-api/issues"
   },
