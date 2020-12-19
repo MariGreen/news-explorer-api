@@ -10,10 +10,8 @@ const validateUser = celebrate({
       .messages({
         'any.required': 'Поле "email" должно быть заполнено',
       }),
-    password: Joi.string().alphanum().required().min(8)
+    password: Joi.string().alphanum().required()
       .messages({
-        'string.min': 'Минимальная длина поля "password": 8 символов',
-        'string.alphanum': 'Поле "password" может содержать только буквы или цифры',
         'any.required': 'Поле "password" должно быть заполнено',
       }),
     name: Joi.string().required().min(2).max(30)
@@ -34,10 +32,8 @@ const validateLogin = celebrate({
       .messages({
         'any.required': 'Поле "email" должно быть заполнено',
       }),
-    password: Joi.string().required().alphanum().min(8)
+    password: Joi.string().required()
       .messages({
-        'string.min': 'Минимальная длина поля "password": 8 символов',
-        'string.alphanum': 'Поле "password" может содержать только буквы или цифры',
         'any.required': 'Поле "password" должно быть заполнено',
       }),
   }),

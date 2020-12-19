@@ -8,8 +8,6 @@ https://mgreen.students.nomoredomains.rocks
 
 https://api.mgreen.students.nomoredomains.rocks
 
-*сделала заявку на регистрацию доменного имени mgreen.ga, чтобы все варианты домена и поддомена сделать, но там до 72 часов могут отвечать. так что пока так*
-
 # IP-адрес
 
 84.201.172.15

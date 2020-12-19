@@ -1,5 +1,6 @@
 const BAD_REQUEST = 'Переданы некорректные данные';
 const NOT_FOUND_ARTICLE = 'Статьи нет в базе';
+const NOT_FOUND_ARTICLES = 'Сохранённых статей нет';
 const NOT_FOUND_USER = 'Такого пользователя не существует';
 const NOT_FOUND = 'Запрашиваемый ресурс не найден';
 const FORBIDDEN = 'Можно удалить только свой контент';
@@ -13,6 +14,7 @@ const INCORRECT = 'Неправильные почта или пароль';
 module.exports = {
   BAD_REQUEST,
   NOT_FOUND_ARTICLE,
+  NOT_FOUND_ARTICLES,
   NOT_FOUND_USER,
   NOT_FOUND,
   FORBIDDEN,

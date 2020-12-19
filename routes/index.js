@@ -16,7 +16,7 @@ router.use(auth, userRouter);
 router.use(auth, articlesRouter);
 
 router.get('*', () => {
-  throw new NotFoundError({ NOT_FOUND });
+  throw new NotFoundError(NOT_FOUND);
 });
 
 module.exports = router;

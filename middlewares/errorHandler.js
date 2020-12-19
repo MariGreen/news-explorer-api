@@ -6,7 +6,7 @@ module.exports = ((err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === 500
-        ? { SERVER_ERROR }
+        ? SERVER_ERROR
         : message,
     });
   next();
