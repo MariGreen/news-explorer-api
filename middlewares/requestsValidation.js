@@ -10,7 +10,7 @@ const validateUser = celebrate({
       .messages({
         'any.required': 'Поле "email" должно быть заполнено',
       }),
-    password: Joi.string().alphanum().required()
+    password: Joi.string().required()
       .messages({
         'any.required': 'Поле "password" должно быть заполнено',
       }),
