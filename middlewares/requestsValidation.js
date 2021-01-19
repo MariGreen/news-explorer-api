@@ -52,35 +52,35 @@ const validateArticle = celebrate({
       .message({
         'string.trim': 'Поле "title" должно быть заполнено',
       }),
-    text: Joi.string().required().trim()
+    description: Joi.string().required().trim()
       .messages({
-        'any.required': 'Поле "text" должно быть заполнено',
+        'any.required': 'Поле "description" должно быть заполнено',
       }),
-    date: Joi.string().required()
+    publishedAt: Joi.string().required()
       .messages({
-        'any.required': 'Поле "date" должно быть заполнено',
+        'any.required': 'Поле "publishedAt" должно быть заполнено',
       }),
     source: Joi.string().required()
       .messages({
         'any.required': 'Поле "source" должно быть заполнено',
       }),
-    link: Joi.string().required().custom((value, helpers) => {
+    url: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Поле "link" должно быть валидным url-адресом');
+      return helpers.message('Поле "url" должно быть валидным url-адресом');
     })
       .messages({
-        'any.required': 'Поле "link" должно быть заполнено',
+        'any.required': 'Поле "url" должно быть заполнено',
       }),
-    image: Joi.string().required().custom((value, helpers) => {
+    urlToImage: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Поле "link" должно быть валидным url-адресом');
+      return helpers.message('Поле "urlToImage" должно быть валидным url-адресом');
     })
       .messages({
-        'any.required': 'Поле "link" должно быть заполнено',
+        'any.required': 'Поле "urlToImage" должно быть заполнено',
       }),
   }),
 });

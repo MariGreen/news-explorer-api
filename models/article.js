@@ -10,21 +10,21 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Поле "title" должно быть заполнено'],
   },
-  text: {
+  description: {
     type: String,
-    required: [true, 'Поле "text" должно быть заполнено'],
+    required: [true, 'Поле "description" должно быть заполнено'],
   },
-  date: {
+  publishedAt: {
     type: String,
-    required: [true, 'Поле "date" должно быть заполнено'],
+    required: [true, 'Поле "publishedAt" должно быть заполнено'],
   },
   source: {
     type: String,
     required: [true, 'Поле "source" должно быть заполнено'],
   },
-  link: {
+  url: {
     type: String,
-    required: [true, 'Поле "link" должно быть заполнено'],
+    required: [true, 'Поле "url" должно быть заполнено'],
     validate: {
       validator(link) {
         return validator.isURL(link);
@@ -32,14 +32,14 @@ const articleSchema = new mongoose.Schema({
       message: 'Поле "link" должно быть валидным url-адресом',
     },
   },
-  image: {
+  urlToImage: {
     type: String,
-    required: [true, 'Поле "image" должно быть заполнено'],
+    required: [true, 'Поле "urlToImage" должно быть заполнено'],
     validate: {
       validator(image) {
         return validator.isURL(image);
       },
-      message: 'Поле "image" должно быть валидным url-адресом',
+      message: 'Поле "urlToImage" должно быть валидным url-адресом',
     },
   },
   owner: {
@@ -49,7 +49,6 @@ const articleSchema = new mongoose.Schema({
     select: false,
     default: {},
   },
-},
-{ versionKey: false });
+}, { versionKey: false });
 
 module.exports = mongoose.model('article', articleSchema);

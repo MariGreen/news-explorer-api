@@ -18,11 +18,11 @@ const getArticles = (req, res, next) => {
 const createArticle = (req, res, next) => {
   const owner = req.user._id;
   const {
-    keyword, title, text, date, source, link, image,
+    keyword, title, description, publishedAt, source, url, urlToImage,
   } = req.body;
 
   Article.create({
-    keyword, title, text, date, source, link, image, owner,
+    keyword, title, description, publishedAt, source, url, urlToImage, owner,
   })
     .catch(() => {
       throw new BadRequestError(BAD_REQUEST);
@@ -36,11 +36,11 @@ const createArticle = (req, res, next) => {
             data: {
               keyword: article.keyword,
               title: article.title,
-              text: article.text,
-              date: article.date,
+              description: article.description,
+              publishedAt: article.publishedAt,
               source: article.source,
-              link: article.link,
-              image: article.image,
+              url: article.url,
+              urlToImage: article.urlToImage,
             },
           });
         });
@@ -58,11 +58,11 @@ const deleteArticle = (req, res, next) => {
               data: {
                 keyword: article.keyword,
                 title: article.title,
-                text: article.text,
-                date: article.date,
+                description: article.description,
+                publishedAt: article.publishedAt,
                 source: article.source,
-                link: article.link,
-                image: article.image,
+                url: article.url,
+                urlToImage: article.urlToImage,
               },
             });
           });
