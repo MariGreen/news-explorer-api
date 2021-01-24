@@ -52,7 +52,7 @@ const deleteArticle = (req, res, next) => {
     .orFail(new NotFoundError(NOT_FOUND_ARTICLE))
     .then((article) => {
       if (article.owner._id.toString() === req.user._id.toString()) {
-        Article.remove({ _id: article._id })
+        Article.deleteOne({ _id: article._id })
           .then(() => {
             res.send({
               data: {
